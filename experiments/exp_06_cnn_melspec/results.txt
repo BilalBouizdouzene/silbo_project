@@ -1,0 +1,143 @@
+Experiment: CNN on Log-Mel Spectrograms
+=======================================
+
+Description:
+This experiment converts each audio file into a fixed-size log-mel spectrogram and trains a compact CNN for whistled sentence classification. The network is intentionally small because the dataset is limited.
+
+Input representation:
+- Sample rate: 16000 Hz
+- Number of mel bins: 64
+- Maximum number of frames: 256
+- Input shape: (1, 64, 256)
+
+Training configuration:
+- Batch size: 8
+- Max epochs: 60
+- Early stopping patience: 10
+- Learning rate: 0.001
+- Weight decay: 0.0001
+- Loss: CrossEntropyLoss with class weights
+
+Cross-validation:
+- StratifiedKFold with n_splits = 2
+- Classes with fewer than 2 samples are excluded from evaluation
+
+Original class distribution:
+P01    4
+P02    3
+P03    1
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+Removed classes with fewer than 2 samples:
+P03    1
+
+Evaluated class distribution:
+P01    4
+P02    3
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+Fold results:
+- Fold 1: Accuracy=0.5312, Macro F1=0.4993
+- Fold 2: Accuracy=0.5938, Macro F1=0.5517
+
+Final results:
+Accuracy mean: 0.5625
+Accuracy std : 0.0312
+Macro F1 mean: 0.5255
+Macro F1 std : 0.0262
+
+Detailed classification reports:
+
+Fold 1
+----------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00         2
+           1       0.50      1.00      0.67         1
+           2       0.33      1.00      0.50         1
+           3       1.00      1.00      1.00         2
+           4       0.25      1.00      0.40         1
+           5       0.00      0.00      0.00         1
+           6       0.20      0.50      0.29         2
+           7       0.67      1.00      0.80         2
+           8       0.50      0.50      0.50         2
+           9       0.50      1.00      0.67         1
+          10       1.00      0.50      0.67         2
+          11       0.00      0.00      0.00         2
+          12       0.00      0.00      0.00         2
+          13       1.00      1.00      1.00         1
+          14       1.00      1.00      1.00         2
+          15       0.50      0.50      0.50         2
+          16       1.00      1.00      1.00         1
+          17       1.00      1.00      1.00         1
+          18       0.00      0.00      0.00         2
+          19       0.00      0.00      0.00         2
+
+    accuracy                           0.53        32
+   macro avg       0.47      0.60      0.50        32
+weighted avg       0.45      0.53      0.46        32
+
+
+Fold 2
+----------------------------------------
+              precision    recall  f1-score   support
+
+           0       0.00      0.00      0.00         2
+           1       0.50      0.50      0.50         2
+           2       0.50      1.00      0.67         1
+           3       1.00      1.00      1.00         1
+           4       1.00      0.50      0.67         2
+           5       0.00      0.00      0.00         2
+           6       1.00      0.50      0.67         2
+           7       0.25      1.00      0.40         1
+           8       0.67      1.00      0.80         2
+           9       1.00      1.00      1.00         2
+          10       0.20      1.00      0.33         1
+          11       1.00      0.50      0.67         2
+          12       1.00      0.50      0.67         2
+          13       1.00      1.00      1.00         2
+          14       1.00      0.50      0.67         2
+          15       1.00      1.00      1.00         1
+          16       0.00      0.00      0.00         1
+          17       0.00      0.00      0.00         1
+          18       0.00      0.00      0.00         1
+          19       1.00      1.00      1.00         2
+
+    accuracy                           0.59        32
+   macro avg       0.61      0.60      0.55        32
+weighted avg       0.67      0.59      0.58        32
+

@@ -1,0 +1,172 @@
+Experiment: wav2vec2 Encoder + SVM
+==================================
+
+Description:
+This experiment uses wav2vec2 as a frozen feature extractor. For each audio file, the hidden states are mean-pooled over time to obtain one fixed-size embedding. A Support Vector Machine is then trained on top of these embeddings for whistled sentence classification.
+
+Embedding extraction:
+- wav2vec2 model: facebook/wav2vec2-base-960h
+- Sample rate: 16000 Hz
+- Embedding dimension: 768
+- Pooling: mean pooling over encoder time frames
+
+Cross-validation:
+- StratifiedKFold with n_splits = 2
+- Classes with fewer than 2 samples are excluded from evaluation
+
+Original class distribution:
+P01    4
+P02    3
+P03    1
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+Removed classes with fewer than 2 samples:
+P03    1
+
+Evaluated class distribution:
+P01    4
+P02    3
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+All tested SVM configurations:
+
+Config: {'kernel': 'rbf', 'C': 0.1, 'gamma': 'scale'}
+Accuracy mean: 0.3281
+Accuracy std : 0.1406
+Macro F1 mean: 0.2875
+Macro F1 std : 0.1275
+
+Config: {'kernel': 'rbf', 'C': 1, 'gamma': 'scale'}
+Accuracy mean: 0.3281
+Accuracy std : 0.1406
+Macro F1 mean: 0.2875
+Macro F1 std : 0.1275
+
+Config: {'kernel': 'rbf', 'C': 10, 'gamma': 'scale'}
+Accuracy mean: 0.3594
+Accuracy std : 0.1719
+Macro F1 mean: 0.3001
+Macro F1 std : 0.1385
+
+Config: {'kernel': 'rbf', 'C': 100, 'gamma': 'scale'}
+Accuracy mean: 0.3594
+Accuracy std : 0.1719
+Macro F1 mean: 0.3001
+Macro F1 std : 0.1385
+
+Config: {'kernel': 'linear', 'C': 1, 'gamma': 'scale'}
+Accuracy mean: 0.4219
+Accuracy std : 0.1094
+Macro F1 mean: 0.3953
+Macro F1 std : 0.1164
+
+Config: {'kernel': 'linear', 'C': 10, 'gamma': 'scale'}
+Accuracy mean: 0.4219
+Accuracy std : 0.1094
+Macro F1 mean: 0.3953
+Macro F1 std : 0.1164
+
+
+Best configuration:
+{'kernel': 'linear', 'C': 1, 'gamma': 'scale'}
+Best Accuracy mean: 0.4219
+Best Accuracy std : 0.1094
+Best Macro F1 mean: 0.3953
+Best Macro F1 std : 0.1164
+
+
+Detailed classification reports for the best configuration:
+
+Fold 1
+----------------------------------------
+              precision    recall  f1-score   support
+
+         P01       0.00      0.00      0.00         2
+         P02       1.00      1.00      1.00         1
+         P04       0.00      0.00      0.00         1
+         P05       0.00      0.00      0.00         2
+         P06       0.25      1.00      0.40         1
+         P07       0.50      1.00      0.67         1
+         P08       0.29      1.00      0.44         2
+         P09       1.00      1.00      1.00         2
+         P10       0.00      0.00      0.00         2
+         P11       0.25      1.00      0.40         1
+         P12       0.00      0.00      0.00         2
+         P13       0.00      0.00      0.00         2
+         P14       0.00      0.00      0.00         2
+         P15       1.00      1.00      1.00         1
+         P16       0.00      0.00      0.00         2
+         P17       1.00      0.50      0.67         2
+         P18       0.00      0.00      0.00         1
+         P19       0.00      0.00      0.00         1
+         P20       0.00      0.00      0.00         2
+         P21       0.00      0.00      0.00         2
+
+    accuracy                           0.31        32
+   macro avg       0.26      0.38      0.28        32
+weighted avg       0.24      0.31      0.24        32
+
+
+Fold 2
+----------------------------------------
+              precision    recall  f1-score   support
+
+         P01       0.25      0.50      0.33         2
+         P02       1.00      0.50      0.67         2
+         P04       0.00      0.00      0.00         1
+         P05       0.50      1.00      0.67         1
+         P06       1.00      0.50      0.67         2
+         P07       0.00      0.00      0.00         2
+         P08       0.25      0.50      0.33         2
+         P09       1.00      1.00      1.00         1
+         P10       0.50      0.50      0.50         2
+         P11       1.00      0.50      0.67         2
+         P12       0.00      0.00      0.00         1
+         P13       0.25      0.50      0.33         2
+         P14       0.33      0.50      0.40         2
+         P15       1.00      1.00      1.00         2
+         P16       1.00      1.00      1.00         2
+         P17       1.00      1.00      1.00         1
+         P18       0.00      0.00      0.00         1
+         P19       0.00      0.00      0.00         1
+         P20       1.00      1.00      1.00         1
+         P21       1.00      0.50      0.67         2
+
+    accuracy                           0.53        32
+   macro avg       0.55      0.53      0.51        32
+weighted avg       0.58      0.53      0.52        32
+

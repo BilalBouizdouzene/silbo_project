@@ -1,0 +1,112 @@
+# ============================================================
+# Python
+# ============================================================
+
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python cache / test cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# ============================================================
+# Jupyter
+# ============================================================
+
+.ipynb_checkpoints/
+
+# ============================================================
+# Data files
+# ============================================================
+
+# Raw audio files should not be pushed
+data/raw/
+
+# TextGrid annotations should not be pushed unless explicitly allowed
+data/annotations/
+
+# Generated features, embeddings, spectrograms
+data/processed/
+*.npz
+*.npy
+
+# Keep metadata files
+!data/metadata/
+!data/metadata/labels.csv
+!data/metadata/labels_clean.csv
+!data/metadata/label_mapping.csv
+
+# ============================================================
+# Trained models
+# ============================================================
+
+models/
+*.joblib
+*.pkl
+*.pt
+*.pth
+*.ckpt
+
+# ============================================================
+# Experiment artifacts
+# ============================================================
+
+# Keep experiment result summaries
+!experiments/
+!experiments/**/
+!experiments/**/results.txt
+
+# Ignore logs and temporary experiment files
+experiments/logs/
+*.log
+
+# Ignore removed or deprecated experiments if still present
+experiments/exp_07_mfcc_svm_augmentation/
+
+# Optional old empty folders
+experiments/exp_02_whisper/
+experiments/exp_03_wav2vec2/
+
+# ============================================================
+# Reports / generated files
+# ============================================================
+
+reports/*.pdf
+reports/*.docx
+reports/*.pptx
+
+# Keep figures if you add them manually later
+!reports/figures/
+!reports/figures/**
+
+# ============================================================
+# IDE / OS files
+# ============================================================
+
+.vscode/
+.idea/
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ============================================================
+# Environment variables / credentials
+# ============================================================
+
+.env
+.env.*
+*.key
+*.pem

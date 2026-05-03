@@ -1,0 +1,175 @@
+Experiment: Fusion MFCC + Delta + Delta-Delta + Whisper Encoder + SVM
+=====================================================================
+
+Description:
+This experiment combines classical acoustic features with Whisper encoder embeddings. The acoustic part uses MFCC, delta MFCC and delta-delta MFCC summarized with mean and standard deviation. The neural part uses the Whisper encoder with mean pooling over time. The final classifier is an SVM.
+
+Feature extraction:
+- Sample rate: 16000 Hz
+- Number of MFCC coefficients: 20
+- Acoustic features: MFCC + delta + delta-delta, mean + std
+- Acoustic feature dimension: 120
+- Whisper model: openai/whisper-tiny
+- Whisper embedding dimension: 384
+- Total feature dimension: 504
+
+Cross-validation:
+- StratifiedKFold with n_splits = 2
+- Classes with fewer than 2 samples are excluded from evaluation
+
+Original class distribution:
+P01    4
+P02    3
+P03    1
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+Removed classes with fewer than 2 samples:
+P03    1
+
+Evaluated class distribution:
+P01    4
+P02    3
+P04    2
+P05    3
+P06    3
+P07    3
+P08    4
+P09    3
+P10    4
+P11    3
+P12    3
+P13    4
+P14    4
+P15    3
+P16    4
+P17    3
+P18    2
+P19    2
+P20    3
+P21    4
+
+All tested SVM configurations:
+
+Config: {'kernel': 'rbf', 'C': 0.1, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5762
+Macro F1 std : 0.0104
+
+Config: {'kernel': 'rbf', 'C': 1, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5762
+Macro F1 std : 0.0104
+
+Config: {'kernel': 'rbf', 'C': 10, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5517
+Macro F1 std : 0.0159
+
+Config: {'kernel': 'rbf', 'C': 100, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5517
+Macro F1 std : 0.0159
+
+Config: {'kernel': 'linear', 'C': 1, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5763
+Macro F1 std : 0.0187
+
+Config: {'kernel': 'linear', 'C': 10, 'gamma': 'scale'}
+Accuracy mean: 0.5625
+Accuracy std : 0.0000
+Macro F1 mean: 0.5763
+Macro F1 std : 0.0187
+
+
+Best configuration:
+{'kernel': 'linear', 'C': 1, 'gamma': 'scale'}
+Best Accuracy mean: 0.5625
+Best Accuracy std : 0.0000
+Best Macro F1 mean: 0.5763
+Best Macro F1 std : 0.0187
+
+
+Detailed classification reports for the best configuration:
+
+Fold 1
+----------------------------------------
+              precision    recall  f1-score   support
+
+         P01       0.33      0.50      0.40         2
+         P02       0.33      1.00      0.50         1
+         P04       0.00      0.00      0.00         1
+         P05       1.00      1.00      1.00         2
+         P06       1.00      1.00      1.00         1
+         P07       1.00      1.00      1.00         1
+         P08       0.50      0.50      0.50         2
+         P09       1.00      1.00      1.00         2
+         P10       0.00      0.00      0.00         2
+         P11       1.00      1.00      1.00         1
+         P12       1.00      0.50      0.67         2
+         P13       1.00      0.50      0.67         2
+         P14       0.00      0.00      0.00         2
+         P15       1.00      1.00      1.00         1
+         P16       0.50      0.50      0.50         2
+         P17       1.00      1.00      1.00         2
+         P18       1.00      1.00      1.00         1
+         P19       0.00      0.00      0.00         1
+         P20       0.00      0.00      0.00         2
+         P21       1.00      0.50      0.67         2
+
+    accuracy                           0.56        32
+   macro avg       0.63      0.60      0.59        32
+weighted avg       0.62      0.56      0.57        32
+
+
+Fold 2
+----------------------------------------
+              precision    recall  f1-score   support
+
+         P01       0.50      0.50      0.50         2
+         P02       1.00      0.50      0.67         2
+         P04       0.00      0.00      0.00         1
+         P05       1.00      1.00      1.00         1
+         P06       1.00      0.50      0.67         2
+         P07       1.00      0.50      0.67         2
+         P08       0.67      1.00      0.80         2
+         P09       1.00      1.00      1.00         1
+         P10       0.00      0.00      0.00         2
+         P11       1.00      1.00      1.00         2
+         P12       0.17      1.00      0.29         1
+         P13       0.33      0.50      0.40         2
+         P14       0.00      0.00      0.00         2
+         P15       1.00      1.00      1.00         2
+         P16       0.50      0.50      0.50         2
+         P17       1.00      1.00      1.00         1
+         P18       1.00      1.00      1.00         1
+         P19       0.00      0.00      0.00         1
+         P20       0.00      0.00      0.00         1
+         P21       1.00      0.50      0.67         2
+
+    accuracy                           0.56        32
+   macro avg       0.61      0.57      0.56        32
+weighted avg       0.63      0.56      0.56        32
+
